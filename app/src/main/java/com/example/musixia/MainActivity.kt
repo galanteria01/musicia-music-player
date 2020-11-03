@@ -10,16 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     var musicList = mutableListOf<Music>()
+    var adapter:MyMusicAdapter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        loadMusic()
     }
 
     override fun onStart() {
@@ -52,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
     fun loadMusic(){
 
 
@@ -107,15 +107,15 @@ class MainActivity : AppCompatActivity() {
 
     inner class MyMusicAdapter: BaseAdapter(){
         override fun getCount(): Int {
-            TODO("Not yet implemented")
+             return musicList.size
         }
 
         override fun getItem(position: Int): Any {
-            TODO("Not yet implemented")
+            return musicList[position]
         }
 
         override fun getItemId(position: Int): Long {
-            TODO("Not yet implemented")
+            return position.toLong()
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
