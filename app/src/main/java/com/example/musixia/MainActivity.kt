@@ -6,6 +6,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
+    var musicList = mutableListOf<Music>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -50,12 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun loadMusic(){
-        data class Music(val uri: Uri,
-                         val name:String,
-                         val artist:String,
-                         val duration: Int,
-                         val size:Int)
-        var musicList = mutableListOf<Music>()
+
 
         val projection = arrayOf(
                 MediaStore.Audio.Media._ID,
@@ -102,6 +101,25 @@ class MainActivity : AppCompatActivity() {
                 musicList.add(Music(contentUri,name,artistName,duration,size))
 
             }
+        }
+
+    }
+
+    inner class MyMusicAdapter: BaseAdapter(){
+        override fun getCount(): Int {
+            TODO("Not yet implemented")
+        }
+
+        override fun getItem(position: Int): Any {
+            TODO("Not yet implemented")
+        }
+
+        override fun getItemId(position: Int): Long {
+            TODO("Not yet implemented")
+        }
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            TODO("Not yet implemented")
         }
 
     }
