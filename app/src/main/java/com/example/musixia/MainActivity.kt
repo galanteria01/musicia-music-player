@@ -115,11 +115,11 @@ class MainActivity : AppCompatActivity() {
 
         }
         override fun getCount(): Int {
-             return musicList.size
+             return this.listOfMusic.size
         }
 
         override fun getItem(position: Int): Any {
-            return musicList[position]
+            return this.listOfMusic[position]
         }
 
         override fun getItemId(position: Int): Long {
@@ -127,8 +127,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            var song = musicList[position]
-            if(musicList.isEmpty()){
+            var song = this.listOfMusic[position]
+            if(this.listOfMusic.isEmpty()){
                 var myView = layoutInflater.inflate(R.layout.no_songs_ticket,null)
                 return myView
             }else{
