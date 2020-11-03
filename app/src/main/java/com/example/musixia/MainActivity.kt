@@ -12,6 +12,7 @@ import android.widget.BaseAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import kotlinx.android.synthetic.main.music_list_ticket.view.*
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        loadMusic()
+
     }
 
     override fun onStart() {
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
+        loadMusic()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -98,14 +100,20 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 // Save musics in list
-                musicList.add(Music(contentUri,name,artistName,duration,size))
+                musicList.add(Music(contentUri,name,artistName,duration.toFloat(),size.toFloat()))
 
             }
         }
+        adapter = MyMusicAdapter(musicList)
 
     }
 
-    inner class MyMusicAdapter: BaseAdapter(){
+    inner class MyMusicAdapter: BaseAdapter{
+        var listOfMusic = mutableListOf<Music>()
+        constructor(listOfMusic:MutableList<Music>):super(){
+            this.listOfMusic = listOfMusic
+
+        }
         override fun getCount(): Int {
              return musicList.size
         }
@@ -119,7 +127,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            TODO("Not yet implemented")
+            var song = musicList[position]
+            if(musicList.isEmpty()){
+                var myView = layoutInflater.inflate(R.layout.no_songs_ticket,null)
+                return myView
+            }else{
+                var myView = layoutInflater.inflate(R.layout.music_list_ticket,null)
+                myView.tvArtistName.text = song.artist
+                myView.tvSongName.text = song.name
+                return myView
+            }
         }
 
     }
