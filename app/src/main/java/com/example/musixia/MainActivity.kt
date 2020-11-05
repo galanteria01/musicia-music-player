@@ -12,6 +12,10 @@ import android.widget.BaseAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.musixia.Class.Music
+import com.example.musixia.Fragments.fMusicList
+import com.example.musixia.Fragments.fSearchMusic
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.music_list_ticket.view.*
 import java.util.concurrent.TimeUnit
 
@@ -21,7 +25,30 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val musicListFragment = fMusicList()
+        val searchFragment = fSearchMusic()
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.flFragment, musicListFragment)
+            commit()
+        }
+        buList.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.flFragment, musicListFragment)
+                commit()
+            }
+        }
+        buSearch.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.flFragment, searchFragment)
+                commit()
+            }
+        }
+        buFavourite.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.flFragment, musicListFragment)
+                commit()
+            }
+        }
     }
 
     override fun onStart() {

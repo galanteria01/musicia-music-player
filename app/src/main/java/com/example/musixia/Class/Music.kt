@@ -1,4 +1,4 @@
-package com.example.musixia
+package com.example.musixia.Class
 
 import android.net.Uri
 

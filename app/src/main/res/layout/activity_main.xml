@@ -7,15 +7,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <View
-        android:id="@+id/view"
+    <FrameLayout
+        android:id="@+id/flFragment"
         android:layout_width="match_parent"
-        android:layout_height="80dp" />
-
-    <ListView
-        android:id="@+id/lvSongs"
-        android:layout_width="match_parent"
-        android:layout_height="628dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <LinearLayout
@@ -66,21 +61,21 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/buList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/buSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/buFavourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
