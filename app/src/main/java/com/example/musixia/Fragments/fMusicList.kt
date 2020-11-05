@@ -1,11 +1,14 @@
 package com.example.musixia.Fragments
 
+import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Size
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -24,8 +27,16 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
     var musicList = mutableListOf<Music>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
     override fun onStart() {
         super.onStart()
@@ -58,6 +69,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
         }
     }
 
+    @SuppressLint("NewApi")
     fun loadMusic(){
 
 
@@ -101,8 +113,11 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
                 val contentUri: Uri = ContentUris.withAppendedId(
                     MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                    id
-                )
+                    id)
+                val thumbnail: Bitmap =
+                        context!!.contentResolver.loadThumbnail(
+                                contentUri, Size(640, 480), null)
+
 
                 // Save musics in list
                 musicList.add(Music(contentUri,name,artistName,duration.toFloat(),size.toFloat()))

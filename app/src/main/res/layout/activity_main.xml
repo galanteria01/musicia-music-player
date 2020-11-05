@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#121212"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <FrameLayout
         android:id="@+id/flFragment"
@@ -34,14 +35,18 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="TextView"
+                android:textColor="#009688"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="#009688" />
         </LinearLayout>
 
         <Button
@@ -49,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@android:drawable/ic_media_play"
+            android:backgroundTint="@color/black"
             android:text="Play" />
 
     </LinearLayout>
@@ -63,22 +69,25 @@
         <ImageButton
             android:id="@+id/buList"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
+            android:background="#121212"
             app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageButton
             android:id="@+id/buSearch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
+            android:background="#121212"
             app:srcCompat="@android:drawable/ic_menu_search" />
 
         <ImageButton
             android:id="@+id/buFavourite"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
+            android:background="#121212"
             app:srcCompat="@android:drawable/ic_menu_save" />
     </LinearLayout>
 
