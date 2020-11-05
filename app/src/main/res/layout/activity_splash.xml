@@ -35,7 +35,6 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/progressBar"
         android:layout_marginTop="200dp"
         android:gravity="center"
         android:padding="15dp"

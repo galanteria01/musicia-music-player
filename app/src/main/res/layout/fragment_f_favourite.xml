@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.fSearchMusic">
+    tools:context=".Fragments.fFavouriteFragment">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SEARCH ACTIVITY"
-        android:textSize="30sp" />
+        android:text="FAVOURITE FRAGMENT" />
 </FrameLayout>
