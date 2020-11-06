@@ -15,6 +15,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:background="@drawable/search_background"
-            android:hint="Enter song name" />
+            android:backgroundTint="#AE28282E"
+            android:hint="Enter song name"
+            android:textColor="#F44336"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 </FrameLayout>
