@@ -1,19 +1,11 @@
 package com.example.musixia.Fragments
 
 import android.annotation.SuppressLint
-import android.content.ContentUris
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Size
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.musixia.Class.Music
 import com.example.musixia.R
@@ -24,14 +16,18 @@ import java.util.concurrent.TimeUnit
 
 class fMusicList : Fragment(R.layout.fragment_f_music_list) {
     var adapter:MyMusicAdapter?=null
-    var musicList = mutableListOf<Music>()
+    var musicList = ArrayList<Music>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadMusic()
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
     }
 
     override fun onDestroy() {
@@ -40,34 +36,10 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
     override fun onStart() {
         super.onStart()
-        checkPermissions()
+
     }
 
-    var CONTACT_CODE = 1234
-    fun checkPermissions(){
-        if(Build.VERSION.SDK_INT>=23){
-            if(ActivityCompat.checkSelfPermission(context!!,android.Manifest.permission.READ_EXTERNAL_STORAGE)!=
-                PackageManager.PERMISSION_GRANTED){
-                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),CONTACT_CODE)
-                return
-            }
-        }
-        loadMusic()
-    }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
-            CONTACT_CODE ->{
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(context,"Permission granted", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(context,"Permission rejected", Toast.LENGTH_SHORT).show()
-
-                }
-            }else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        }
-    }
 
     @SuppressLint("NewApi")
     fun loadMusic(){
@@ -81,57 +53,61 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
             MediaStore.Audio.Media.SIZE
         )
 
-        val selection = "${MediaStore.Audio.Media.DURATION} >= ?"
+        val selection = MediaStore.Audio.Media.IS_MUSIC + "!=0"
         val selectionArgs = arrayOf(
             TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES)
             .toString())
         val sortOrder = "${MediaStore.Audio.Media.DISPLAY_NAME} ASC"
         val query =  context!!.contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            projection,
+             null,
             selection,
-            selectionArgs,
-            sortOrder)
+            null,
+            null)
 
-        query?.use{
-                cursor ->
-            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+        query?.use { cursor ->
+            val urlColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
             val nameColumn =
-                cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
             val artistNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
             val durationColumn =
-                cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+                    cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
             val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
 
 
-            while(cursor.moveToNext()){
-                val id = cursor.getLong(idColumn)
-                val name = cursor.getString(nameColumn)
-                val artistName = cursor.getString(artistNameColumn)
-                val duration = cursor.getInt(durationColumn)
-                val size = cursor.getInt(sizeColumn)
+                    do {
+                        val url = cursor.getString(urlColumn)
+                        val name = cursor.getString(nameColumn)
+                        val artistName = cursor.getString(artistNameColumn)
+                        val duration = cursor.getFloat(durationColumn)
+                        val size = cursor.getFloat(sizeColumn)
 
-                val contentUri: Uri = ContentUris.withAppendedId(
-                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                    id)
-                val thumbnail: Bitmap =
-                        context!!.contentResolver.loadThumbnail(
-                                contentUri, Size(640, 480), null)
+                        //val contentUri: Uri = ContentUris.withAppendedId(
+                        //        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                        //        id)
+                        //val thumbnail: Bitmap =
+                        //        context!!.contentResolver.loadThumbnail(
+                        //                contentUri, Size(640, 480), null)
 
 
-                // Save musics in list
-                musicList.add(Music(contentUri,name,artistName,duration.toFloat(),size.toFloat()))
+                        // Save musics in list
+                        musicList.add(Music(url, name, artistName, duration, size))
 
+                    }while (cursor.moveToNext())
+                }
+                adapter = MyMusicAdapter(musicList)
+                lvMusic.adapter = adapter
             }
         }
-        adapter = MyMusicAdapter(musicList)
-        lvMusic.adapter = adapter
+
 
     }
 
     inner class MyMusicAdapter: BaseAdapter {
-        var listOfMusic = mutableListOf<Music>()
-        constructor(listOfMusic:MutableList<Music>):super(){
+        var listOfMusic = ArrayList<Music>()
+        constructor(listOfMusic:ArrayList<Music>):super(){
             this.listOfMusic = listOfMusic
 
         }
