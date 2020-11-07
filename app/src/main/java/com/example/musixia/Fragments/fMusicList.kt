@@ -1,11 +1,14 @@
 package com.example.musixia.Fragments
 
 import android.annotation.SuppressLint
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.example.musixia.Class.Music
 import com.example.musixia.R
@@ -17,6 +20,7 @@ import java.util.concurrent.TimeUnit
 class fMusicList : Fragment(R.layout.fragment_f_music_list) {
     var adapter:MyMusicAdapter?=null
     var musicList = ArrayList<Music>()
+    var mp:MediaPlayer?=null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,10 +38,6 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
         super.onDestroy()
     }
 
-    override fun onStart() {
-        super.onStart()
-
-    }
 
 
 
@@ -66,7 +66,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
             null)
 
         query?.use { cursor ->
-            val urlColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+            val uriColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
             val nameColumn =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
             val artistNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
@@ -78,7 +78,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
 
                     do {
-                        val url = cursor.getString(urlColumn)
+                        val uri = cursor.getString(uriColumn)
                         val name = cursor.getString(nameColumn)
                         val artistName = cursor.getString(artistNameColumn)
                         val duration = cursor.getFloat(durationColumn)
@@ -93,7 +93,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
 
                         // Save musics in list
-                        musicList.add(Music(url, name, artistName, duration, size))
+                        musicList.add(Music(uri.toUri(), name, artistName, duration, size))
 
                     }while (cursor.moveToNext())
                 }
@@ -123,15 +123,58 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
             return position.toLong()
         }
 
+        fun pause(){
+            mp!!.pause()
+        }
+
+        fun play(){
+            mp!!.start()
+        }
+
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var song = this.listOfMusic[position]
-            if(this.listOfMusic.isEmpty()){
+
+
+                if(this.listOfMusic.isEmpty()){
                 var myView = layoutInflater.inflate(R.layout.no_songs_ticket,null)
                 return myView
             }else{
                 var myView = layoutInflater.inflate(R.layout.music_list_ticket,null)
                 myView.tvArtistName.text = song.artist
                 myView.tvSongName.text = song.name
+                myView.ivPlayButton.setOnClickListener {
+                    if(myView.ivPlayButton.text == "Stop"){
+                        mp!!.stop()
+                        myView.ivPlayButton.text = "Start"
+                    }else {
+
+
+                        try {
+                            val mediaPlayer: MediaPlayer? = MediaPlayer().apply {
+                                setAudioAttributes(
+                                        AudioAttributes.Builder()
+                                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                                .build()
+                                )
+                                setDataSource(context!!, song.uri!!)
+                                prepare()
+                                start()
+                            }
+                            mediaPlayer!!.start()
+
+                            //mp!!.reset()
+                            //mp!!.prepare()
+                            //mp!!.setDataSource(context,song.uri!!)
+
+                            //if(!(mp!!.isPlaying)) {
+                            //    mp!!.start()
+                            //}
+                            myView.ivPlayButton.text = "Stop"
+                        } catch (ex: Exception) {
+                        }
+                    }
+                }
                 return myView
             }
         }

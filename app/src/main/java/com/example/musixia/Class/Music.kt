@@ -1,18 +1,20 @@
 package com.example.musixia.Class
 
+import android.net.Uri
+
 class Music {
-    var url:String?=null
+    var uri:Uri?=null
     var name:String?=null
     var artist:String?=null
     var duration:Float?=null
     var size:Float?=null
 
-    constructor(url: String,
+    constructor(url: Uri,
                 name:String,
                 artist:String,
                 duration: Float,
                 size: Float){
-        this.url = url
+        this.uri = uri
         this.name = name
         this.artist = artist
         this.duration = duration

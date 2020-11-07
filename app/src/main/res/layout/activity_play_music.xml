@@ -46,8 +46,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
+        android:layout_marginBottom="183dp"
         android:background="@drawable/btn_play_bg"
         android:backgroundTint="@color/blue_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvArtistNameMusic"
@@ -57,11 +59,14 @@
         android:id="@+id/btnBackward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="205dp"
+        android:layout_marginBottom="212dp"
         android:background="#121212"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPlay"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_round_skip_previous_24"
-        tools:layout_editor_absoluteY="633dp" />
+        app:layout_constraintTop_toBottomOf="@+id/ivSongMusic"
+        app:srcCompat="@drawable/ic_round_skip_previous_24" />
 
     <TextView
         android:id="@+id/tvSongNameMusic"
@@ -98,10 +103,13 @@
         android:id="@+id/btnForward"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="205dp"
+        android:layout_marginBottom="212dp"
         android:background="#121212"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnPlay"
-        app:srcCompat="@drawable/ic_round_skip_next_24"
-        tools:layout_editor_absoluteY="633dp" />
+        app:layout_constraintTop_toBottomOf="@+id/ivSongMusic"
+        app:srcCompat="@drawable/ic_round_skip_next_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

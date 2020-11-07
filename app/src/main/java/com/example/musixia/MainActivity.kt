@@ -1,6 +1,8 @@
 package com.example.musixia
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -13,6 +15,7 @@ import com.example.musixia.Fragments.fSearchMusic
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var mediaPlayer:MediaPlayer?=null
     var musicList = ArrayList<Music>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,12 @@ class MainActivity : AppCompatActivity() {
                 commit()
             }
         }
+        PlayMusicPath.setOnClickListener {
+            val intent = Intent(applicationContext,PlayMusic::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
 
