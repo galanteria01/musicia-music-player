@@ -1,14 +1,14 @@
 package com.example.musixia.Fragments
 
 import android.annotation.SuppressLint
-import android.media.AudioAttributes
+import android.content.ContentUris
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import androidx.core.net.toUri
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.musixia.Class.Music
 import com.example.musixia.R
@@ -24,6 +24,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mp = MediaPlayer()
         loadMusic()
 
     }
@@ -66,7 +67,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
             null)
 
         query?.use { cursor ->
-            val uriColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
             val nameColumn =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
             val artistNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
@@ -78,11 +79,12 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
 
                     do {
-                        val uri = cursor.getString(uriColumn)
+                        val id = cursor.getLong(idColumn)
                         val name = cursor.getString(nameColumn)
                         val artistName = cursor.getString(artistNameColumn)
                         val duration = cursor.getFloat(durationColumn)
                         val size = cursor.getFloat(sizeColumn)
+                        val uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,id)
 
                         //val contentUri: Uri = ContentUris.withAppendedId(
                         //        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
@@ -93,7 +95,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
 
                         // Save musics in list
-                        musicList.add(Music(uri.toUri(), name, artistName, duration, size))
+                        musicList.add(Music(id,uri, name, artistName, duration, size))
 
                     }while (cursor.moveToNext())
                 }
@@ -147,29 +149,24 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                         mp!!.stop()
                         myView.ivPlayButton.text = "Start"
                     }else {
-
-
                         try {
-                            val mediaPlayer: MediaPlayer? = MediaPlayer().apply {
-                                setAudioAttributes(
-                                        AudioAttributes.Builder()
-                                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                                .setUsage(AudioAttributes.USAGE_MEDIA)
-                                                .build()
-                                )
-                                setDataSource(context!!, song.uri!!)
-                                prepare()
-                                start()
-                            }
-                            mediaPlayer!!.start()
+                            Toast.makeText(context,"trying music",Toast.LENGTH_SHORT).show()
+                            mp!!.reset()
+                            Toast.makeText(context,"resetting music",Toast.LENGTH_SHORT).show()
 
-                            //mp!!.reset()
-                            //mp!!.prepare()
-                            //mp!!.setDataSource(context,song.uri!!)
+                            mp!!.setDataSource(context!!,song.uri!!)
+                            Toast.makeText(context,"setting music",Toast.LENGTH_SHORT).show()
 
-                            //if(!(mp!!.isPlaying)) {
-                            //    mp!!.start()
-                            //}
+                            mp!!.prepare()
+                            Toast.makeText(context,"preparing music",Toast.LENGTH_SHORT).show()
+
+                            Toast.makeText(context,"Starting music",Toast.LENGTH_SHORT).show()
+
+                            mp!!.start()
+                            mp!!.release()
+
+
+
                             myView.ivPlayButton.text = "Stop"
                         } catch (ex: Exception) {
                         }
