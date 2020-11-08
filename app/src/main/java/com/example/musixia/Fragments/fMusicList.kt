@@ -5,6 +5,7 @@ import android.content.ContentUris
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -74,17 +75,22 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
             val durationColumn =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
             val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
+            var urlColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
 
 
                     do {
                         val id = cursor.getLong(idColumn)
+                        var url = cursor.getString(urlColumn)
                         val name = cursor.getString(nameColumn)
                         val artistName = cursor.getString(artistNameColumn)
                         val duration = cursor.getFloat(durationColumn)
                         val size = cursor.getFloat(sizeColumn)
                         val uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,id)
+                        Log.d("Tagger",url)
+                        Log.d("uriFind", uri.toString())
+
 
                         //val contentUri: Uri = ContentUris.withAppendedId(
                         //        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
@@ -95,7 +101,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
 
                         // Save musics in list
-                        musicList.add(Music(id,uri, name, artistName, duration, size))
+                        musicList.add(Music(id,url,uri, name, artistName, duration, size))
 
                     }while (cursor.moveToNext())
                 }
@@ -147,14 +153,15 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                 myView.ivPlayButton.setOnClickListener {
                     if(myView.ivPlayButton.text == "Stop"){
                         mp!!.stop()
-                        myView.ivPlayButton.text = "Start"
+                        myView.ivPlayButton.text = "Play"
                     }else {
+                        mp = MediaPlayer()
                         try {
-                            Toast.makeText(context,"trying music",Toast.LENGTH_SHORT).show()
-                            mp!!.reset()
-                            Toast.makeText(context,"resetting music",Toast.LENGTH_SHORT).show()
 
-                            mp!!.setDataSource(context!!,song.uri!!)
+                            Toast.makeText(context,"trying music",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context,"resetting music",Toast.LENGTH_SHORT).show()
+                            Log.d("get",song.uri.toString())
+                            mp!!.setDataSource(context!!, song.uri!!)
                             Toast.makeText(context,"setting music",Toast.LENGTH_SHORT).show()
 
                             mp!!.prepare()
@@ -163,8 +170,6 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                             Toast.makeText(context,"Starting music",Toast.LENGTH_SHORT).show()
 
                             mp!!.start()
-                            mp!!.release()
-
 
 
                             myView.ivPlayButton.text = "Stop"

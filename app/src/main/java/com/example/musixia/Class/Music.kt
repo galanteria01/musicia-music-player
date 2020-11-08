@@ -4,6 +4,7 @@ import android.net.Uri
 
 class Music {
     var id:Long?=null
+    var songURL:String?=null
     var uri:Uri?=null
     var name:String?=null
     var artist:String?=null
@@ -11,7 +12,8 @@ class Music {
     var size:Float?=null
 
     constructor(id:Long,
-                url: Uri,
+                songURL:String,
+                uri: Uri,
                 name:String,
                 artist:String,
                 duration: Float,
@@ -22,6 +24,7 @@ class Music {
         this.artist = artist
         this.duration = duration
         this.size = size
+        this.songURL = songURL
     }
 
 
