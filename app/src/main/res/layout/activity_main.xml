@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     android:background="#121212"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
     <FrameLayout
         android:id="@+id/flFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1" >
+
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/PlayMusicPath"
@@ -34,8 +36,8 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="253dp"
-                android:layout_height="wrap_content"
+                android:layout_width="283dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:lines="1"
                 android:text="Starboy"
@@ -92,6 +94,7 @@
             android:layout_weight="1"
             android:background="#121212"
             app:srcCompat="@drawable/ic_baseline_playlist_play_24" />
+
     </LinearLayout>
 
 </LinearLayout>

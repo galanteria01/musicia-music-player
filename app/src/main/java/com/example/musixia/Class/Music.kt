@@ -1,5 +1,6 @@
 package com.example.musixia.Class
 
+import android.graphics.Bitmap
 import android.net.Uri
 
 class Music {
@@ -10,6 +11,7 @@ class Music {
     var artist:String?=null
     var duration:Float?=null
     var size:Float?=null
+    var thumbnailImage:Bitmap?=null
 
     constructor(id:Long,
                 songURL:String,
@@ -17,7 +19,8 @@ class Music {
                 name:String,
                 artist:String,
                 duration: Float,
-                size: Float){
+                size: Float,
+                thumbnailImage:Bitmap){
         this.id = id
         this.uri = uri
         this.name = name
@@ -25,6 +28,7 @@ class Music {
         this.duration = duration
         this.size = size
         this.songURL = songURL
+        this.thumbnailImage = thumbnailImage
     }
 
 

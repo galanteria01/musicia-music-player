@@ -2,10 +2,12 @@ package com.example.musixia.Fragments
 
 import android.annotation.SuppressLint
 import android.content.ContentUris
+import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Size
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -95,18 +97,19 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                         //val contentUri: Uri = ContentUris.withAppendedId(
                         //        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                         //        id)
-                        //val thumbnail: Bitmap =
-                        //        context!!.contentResolver.loadThumbnail(
-                        //                contentUri, Size(640, 480), null)
+                        val thumbnail: Bitmap =
+                               context!!.contentResolver.loadThumbnail(
+                                        uri, Size(640, 480), null)
 
 
                         // Save musics in list
-                        musicList.add(Music(id,url,uri, name, artistName, duration, size))
+                        musicList.add(Music(id,url,uri, name, artistName, duration, size,thumbnail))
 
                     }while (cursor.moveToNext())
                 }
                 adapter = MyMusicAdapter(musicList)
                 lvMusic.adapter = adapter
+
             }
         }
 

@@ -6,18 +6,27 @@
     android:background="#121212"
     tools:context=".Fragments.fSearchMusic">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
+            android:id="@+id/etMusicSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_margin="8dp"
             android:background="@drawable/search_background"
-            android:backgroundTint="#AE28282E"
-            android:hint="Enter song name"
-            android:textColor="#F44336"
-            android:textStyle="bold" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:backgroundTint="#31485373"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:text="Search for Music" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 </FrameLayout>

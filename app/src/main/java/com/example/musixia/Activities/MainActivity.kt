@@ -1,4 +1,4 @@
-package com.example.musixia
+package com.example.musixia.Activities
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,6 +12,7 @@ import com.example.musixia.Class.Music
 import com.example.musixia.Fragments.fFavouriteFragment
 import com.example.musixia.Fragments.fMusicList
 import com.example.musixia.Fragments.fSearchMusic
+import com.example.musixia.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         PlayMusicPath.setOnClickListener {
-            val intent = Intent(applicationContext,PlayMusic::class.java)
+            val intent = Intent(applicationContext, PlayMusic::class.java)
             startActivity(intent)
         }
 

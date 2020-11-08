@@ -1,4 +1,4 @@
-package com.example.musixia
+package com.example.musixia.Services
 
 import android.app.Service
 import android.content.Intent
