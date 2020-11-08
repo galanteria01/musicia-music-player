@@ -34,7 +34,7 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="match_parent"
+                android:layout_width="253dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lines="1"
@@ -52,13 +52,13 @@
                 android:textColor="#009688" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button"
+        <ImageButton
+            android:id="@+id/imageButton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:drawable/ic_media_play"
-            android:backgroundTint="@color/black"
-            android:text="Play" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#121212"
+            app:srcCompat="@drawable/ic_baseline_play_circle_filled_24" />
 
     </LinearLayout>
 
@@ -75,7 +75,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="#121212"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            app:srcCompat="@drawable/ic_baseline_home_24" />
 
         <ImageButton
             android:id="@+id/buSearch"
@@ -83,7 +83,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="#121212"
-            app:srcCompat="@android:drawable/ic_menu_search" />
+            app:srcCompat="@drawable/ic_baseline_search_24" />
 
         <ImageButton
             android:id="@+id/buFavourite"
@@ -91,7 +91,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="#121212"
-            app:srcCompat="@android:drawable/ic_menu_save" />
+            app:srcCompat="@drawable/ic_baseline_playlist_play_24" />
     </LinearLayout>
 
 </LinearLayout>
