@@ -2,6 +2,7 @@ package com.example.musixia.Fragments
 
 import android.annotation.SuppressLint
 import android.content.ContentUris
+import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -11,10 +12,10 @@ import android.util.Size
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.musixia.Class.Music
 import com.example.musixia.R
+import com.example.musixia.Services.MusicService
 import kotlinx.android.synthetic.main.fragment_f_music_list.*
 import kotlinx.android.synthetic.main.music_list_ticket.view.*
 import java.util.concurrent.TimeUnit
@@ -62,7 +63,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
             TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES)
             .toString())
         val sortOrder = "${MediaStore.Audio.Media.DISPLAY_NAME} ASC"
-        val query =  context!!.contentResolver.query(
+        val query =  requireContext().contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
              null,
             selection,
@@ -98,7 +99,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                         //        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                         //        id)
                         val thumbnail: Bitmap =
-                               context!!.contentResolver.loadThumbnail(
+                               requireContext().contentResolver.loadThumbnail(
                                         uri, Size(640, 480), null)
 
 
@@ -160,21 +161,17 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                     }else {
                         mp = MediaPlayer()
                         try {
-
-                            Toast.makeText(context,"trying music",Toast.LENGTH_SHORT).show()
-                            Toast.makeText(context,"resetting music",Toast.LENGTH_SHORT).show()
-                            Log.d("get",song.uri.toString())
+                            var intent = Intent(context,MusicService::class.java).apply{
+                                putExtra("id",song.id!!)
+                                putExtra("name",song.name)
+                                putExtra("artist",song.artist)
+                                putExtra("uri",song.uri)
+                                putExtra("url",song.songURL)
+                            }
+                            context!!.startService(intent)
                             mp!!.setDataSource(context!!, song.uri!!)
-                            Toast.makeText(context,"setting music",Toast.LENGTH_SHORT).show()
-
                             mp!!.prepare()
-                            Toast.makeText(context,"preparing music",Toast.LENGTH_SHORT).show()
-
-                            Toast.makeText(context,"Starting music",Toast.LENGTH_SHORT).show()
-
                             mp!!.start()
-
-
                             myView.ivPlayButton.text = "Stop"
                         } catch (ex: Exception) {
                         }
