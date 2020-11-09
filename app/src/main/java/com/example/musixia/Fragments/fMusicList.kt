@@ -3,12 +3,10 @@ package com.example.musixia.Fragments
 import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Intent
-import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.util.Size
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -98,13 +96,13 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                         //val contentUri: Uri = ContentUris.withAppendedId(
                         //        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                         //        id)
-                        val thumbnail: Bitmap =
-                               requireContext().contentResolver.loadThumbnail(
-                                        uri, Size(640, 480), null)
+                        //val thumbnail: Bitmap =
+                        //      context!!.contentResolver.loadThumbnail(
+                        //               uri, Size(640, 480), null)
 
 
                         // Save musics in list
-                        musicList.add(Music(id,url,uri, name, artistName, duration, size,thumbnail))
+                        musicList.add(Music(id,url,uri, name, artistName, duration, size,null))
 
                     }while (cursor.moveToNext())
                 }
@@ -154,25 +152,28 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                 var myView = layoutInflater.inflate(R.layout.music_list_ticket,null)
                 myView.tvArtistName.text = song.artist
                 myView.tvSongName.text = song.name
+                    var intent = Intent(context,MusicService::class.java).apply{
+                        putExtra("id",song.id!!)
+                        putExtra("name",song.name)
+                        putExtra("artist",song.artist)
+                        putExtra("uri",song.uri.toString())
+                        putExtra("url",song.songURL)
+                    }
                 myView.ivPlayButton.setOnClickListener {
                     if(myView.ivPlayButton.text == "Stop"){
-                        mp!!.stop()
+                        //mp!!.stop()
+                        context!!.stopService(intent)
                         myView.ivPlayButton.text = "Play"
                     }else {
                         mp = MediaPlayer()
                         try {
-                            var intent = Intent(context,MusicService::class.java).apply{
-                                putExtra("id",song.id!!)
-                                putExtra("name",song.name)
-                                putExtra("artist",song.artist)
-                                putExtra("uri",song.uri)
-                                putExtra("url",song.songURL)
-                            }
-                            context!!.startService(intent)
-                            mp!!.setDataSource(context!!, song.uri!!)
-                            mp!!.prepare()
-                            mp!!.start()
+
                             myView.ivPlayButton.text = "Stop"
+                            context!!.startService(intent)
+                            //mp!!.setDataSource(context!!, song.uri!!)
+                            //mp!!.prepare()
+                            //mp!!.start()
+
                         } catch (ex: Exception) {
                         }
                     }

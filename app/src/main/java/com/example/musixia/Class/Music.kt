@@ -20,7 +20,7 @@ class Music {
                 artist:String,
                 duration: Float,
                 size: Float,
-                thumbnailImage:Bitmap){
+                thumbnailImage: Bitmap?){
         this.id = id
         this.uri = uri
         this.name = name

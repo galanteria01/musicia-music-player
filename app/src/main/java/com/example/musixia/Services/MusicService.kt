@@ -49,7 +49,7 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
                 }
             }
         }
-        return null!!.toInt()
+        return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
