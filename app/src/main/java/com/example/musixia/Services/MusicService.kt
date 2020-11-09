@@ -1,40 +1,52 @@
 package com.example.musixia.Services
 
 import android.app.Service
+import android.content.ContentUris
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.IBinder
 import android.os.PowerManager
-import androidx.core.net.toUri
+import android.util.Log
 
-private const val ACTION_PLAY:String = "com.example.MUSIXIA"
+private const val ACTION_PLAY:String = "com.example.action.PLAY"
 
 class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnErrorListener {
-    private var mediaPlayer:MediaPlayer?=null
+    private var mp:MediaPlayer?=null
+
 
     fun initMediaPlayer(){
-        mediaPlayer!!.setOnErrorListener(this)
+        mp!!.setOnErrorListener(this)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        TODO("Not yet implemented")
+        return null
     }
 
     override fun onPrepared(mp: MediaPlayer?) {
-        mediaPlayer!!.start()
+        mp!!.start()
+        Log.d("gay","This is beginning bullshit 3")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val action: String? = intent!!.action
+        Log.d("gay",action.toString())
+
         var data = intent.extras
         var url = data!!.getString("url")
-        var uri = data.getString("uri")!!.toUri()
+        var id = data!!.getLong("id")
+        var uri: Uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id )
+
+        Log.d("gay","This is beginning bullshit 1")
+
 
         when(action) {
-            ACTION_PLAY -> {
-                mediaPlayer = MediaPlayer()
-                mediaPlayer!!.apply {
+            null -> {
+                mp = MediaPlayer()
+                Log.d("gay","This is beginning bullshit 2")
+
+                mp!!.apply {
                     setAudioAttributes(
                             AudioAttributes.Builder()
                                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -49,6 +61,7 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
                 }
             }
         }
+        //initMediaPlayer()
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -58,7 +71,7 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer?.release()
+        mp?.release()
     }
 
 
