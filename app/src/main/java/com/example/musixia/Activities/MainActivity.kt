@@ -16,7 +16,7 @@ import com.example.musixia.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    var mediaPlayer:MediaPlayer?=null
+    var mp:MediaPlayer?=null
     var musicList = ArrayList<Music>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.flFragment, musicListFragment)
             commit()
         }
-        buList.setOnClickListener {
+        buHome.setOnClickListener {
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.flFragment, musicListFragment)
                 addToBackStack(null)
@@ -54,10 +54,17 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, PlayMusic::class.java)
             startActivity(intent)
         }
+        playPauseBtn.setOnClickListener {
+            applicationContext.stopService(intent)
+        }
 
-
+        //if(applicationContext.mp!!.isPlaying){
+         //   playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24)
+        //}else{
+        //    playPauseBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
+        //
+        //}
     }
-
 
     var CONTACT_CODE = 1234
     fun checkPermissions(){
@@ -80,12 +87,6 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         }
     }
-
-
-
-
-
 }

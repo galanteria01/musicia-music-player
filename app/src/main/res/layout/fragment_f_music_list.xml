@@ -16,11 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
+            android:fontFamily="monospace"
             android:gravity="center"
             android:padding="12pt"
             android:text="Musixia"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textAllCaps="false"
+            android:textColor="#B81919"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/lvMusic"

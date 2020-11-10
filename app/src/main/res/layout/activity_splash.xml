@@ -11,13 +11,15 @@
 
     <!-- Don't worry about the id names I have named the id's with reference to the file name for consistency -->
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="173dp" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:src="@drawable/ic_launcher_background"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        android:layout_height="226dp"
+        app:srcCompat="@drawable/ic_baseline_music_note_24" />
 
     <TextView
         android:id="@+id/textView"
@@ -27,9 +29,13 @@
         android:gravity="center"
         android:padding="30dp"
         android:text="Musixia"
-        android:textColor="@color/purple_500"
+        android:textColor="#6200EE"
         android:textSize="30sp"
         android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="119dp" />
 
     <TextView
         android:id="@+id/textView1"

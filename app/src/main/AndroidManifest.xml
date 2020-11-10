@@ -16,12 +16,16 @@
         android:theme="@style/Theme.Musixia">
         <activity
             android:name=".Activities.Settings"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings">
+
+        </activity>
 
         <service
             android:name=".Services.MusicService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true">
+
+        </service>
 
         <activity android:name=".Activities.PlayMusic" />
         <activity
@@ -33,7 +37,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity"></activity>
+        <activity android:name=".Activities.MainActivity">
+
+        </activity>
     </application>
 
 </manifest>

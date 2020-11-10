@@ -84,13 +84,11 @@ class fSearchMusic : Fragment(R.layout.fragment_f_search_music) {
                         //val contentUri: Uri = ContentUris.withAppendedId(
                         //        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                         //        id)
-                        val thumbnail: Bitmap =
-                                context!!.contentResolver.loadThumbnail(
-                                        uri, Size(640, 480), null)
+
 
 
                         // Save musics in list
-                        listOfMusic.add(Music(id,url,uri, name, artistName, duration, size,thumbnail))
+                        listOfMusic.add(Music(id,url,uri, name, artistName, duration, size,null))
 
                     }while (cursor.moveToNext())
                 }

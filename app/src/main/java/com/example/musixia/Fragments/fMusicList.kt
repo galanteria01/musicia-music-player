@@ -6,7 +6,6 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -14,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.example.musixia.Class.Music
 import com.example.musixia.R
 import com.example.musixia.Services.MusicService
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_f_music_list.*
 import kotlinx.android.synthetic.main.music_list_ticket.view.*
 import java.util.concurrent.TimeUnit
@@ -26,6 +26,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         mp = MediaPlayer()
         loadMusic()
 
@@ -89,8 +90,6 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                         val duration = cursor.getFloat(durationColumn)
                         val size = cursor.getFloat(sizeColumn)
                         val uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,id)
-                        Log.d("Tagger",url)
-                        Log.d("uriFind", uri.toString())
 
 
                         //val contentUri: Uri = ContentUris.withAppendedId(
@@ -133,12 +132,12 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
             return position.toLong()
         }
 
-        fun pause(){
-            mp!!.pause()
+        fun pause(intent:Intent){
+            context!!.stopService(intent)
         }
 
-        fun play(){
-            mp!!.start()
+        fun play(intent:Intent){
+            context!!.startService(intent)
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -161,22 +160,23 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                     }
                 myView.ivPlayButton.setOnClickListener {
                     if(myView.ivPlayButton.text == "Stop"){
-                        //mp!!.stop()
-                        context!!.stopService(intent)
-                        myView.ivPlayButton.text = "Play"
+                        try {
+                            pause(intent)
+                            myView.ivPlayButton.text = "Play"
+                            playPauseBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
+                        }catch (ex:Exception){}
                     }else {
                         mp = MediaPlayer()
-                        try {
+                        try { play(intent)
 
                             myView.ivPlayButton.text = "Stop"
-                            context!!.startService(intent)
-                            //mp!!.setDataSource(context!!, song.uri!!)
-                            //mp!!.prepare()
-                            //mp!!.start()
+                            playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24)
 
                         } catch (ex: Exception) {
                         }
                     }
+
+
                 }
                 return myView
             }

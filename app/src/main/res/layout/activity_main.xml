@@ -55,7 +55,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/playPauseBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -72,7 +72,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/buList"
+            android:id="@+id/buHome"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
