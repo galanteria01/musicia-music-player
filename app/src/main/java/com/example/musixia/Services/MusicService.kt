@@ -95,6 +95,7 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
         var isPlaying:Boolean=false
         var mp = MediaPlayer()
         var len:Int? = null
+
         override fun pausePlaying():Int {
             mp.pause()
             len = mp.currentPosition;

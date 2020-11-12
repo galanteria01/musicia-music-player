@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import com.example.musixia.Class.Music
 import com.example.musixia.R
 import com.example.musixia.Services.MusicService
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_f_music_list.*
 import kotlinx.android.synthetic.main.music_list_ticket.view.*
 import java.util.concurrent.TimeUnit
@@ -157,25 +156,9 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                         putExtra("artist",song.artist)
                         putExtra("url",song.songURL)
                     }
-                myView.ivPlayButton.setOnClickListener {
-                    if(myView.ivPlayButton.text == "Stop"){
-                        try {
-                            pause(intent)
-                            myView.ivPlayButton.text = "Play"
-                            playPauseBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
-                        }catch (ex:Exception){}
-                    }else {
-                        mp = MediaPlayer()
-                        try { play(intent)
-
-                            myView.ivPlayButton.text = "Stop"
-                            playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24)
-
-                        } catch (ex: Exception) {
-                        }
-                    }
-
-
+                myView.buMusicPlay.setOnClickListener {
+                    context!!.startService(intent)
+                    MusicService.startPlaying()
                 }
                 return myView
             }

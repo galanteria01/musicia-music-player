@@ -13,6 +13,7 @@ import com.example.musixia.Fragments.fFavouriteFragment
 import com.example.musixia.Fragments.fMusicList
 import com.example.musixia.Fragments.fSearchMusic
 import com.example.musixia.R
+import com.example.musixia.Services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -55,13 +56,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        playPauseBtn.setOnClickListener {
+            if(MusicService.isPlaying){
+                MusicService.pausePlaying()
+                playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24)
+            }else{
+                MusicService.continuePlaying(MusicService.len!!)
+                playPauseBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
 
-        //if(applicationContext.mp!!.isPlaying){
-         //   playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24)
-        //}else{
-        //    playPauseBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
-        //
-        //}
+            }
+        }
     }
 
     var CONTACT_CODE = 1234
