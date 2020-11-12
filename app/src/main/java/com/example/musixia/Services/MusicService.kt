@@ -14,6 +14,8 @@ private const val ACTION_PLAY:String = "com.example.action.PLAY"
 
 class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnErrorListener {
     private var mp:MediaPlayer?=null
+    var name:String?=null
+    var artist:String?=null
 
 
     fun initMediaPlayer(){
@@ -25,26 +27,32 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
     }
 
     override fun onPrepared(mp: MediaPlayer?) {
-        mp!!.start()
-        Log.d("gay","This is beginning bullshit 3")
+        startPlaying()
+    }
+    fun getSongName():String{
+        return name!!
+    }
+    fun getArtistName():String{
+        return artist!!
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val action: String? = intent!!.action
         Log.d("gay",action.toString())
 
-        var data = intent.extras
-        var url = data!!.getString("url")
-        var id = data!!.getLong("id")
-        var uri: Uri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id )
+        val data = intent.extras
+        name = data!!.getString("name")
+        artist = data.getString("artist")
+        var url = data.getString("url")
+        val id = data.getLong("id")
+        val uri: Uri = ContentUris.withAppendedId(android.provider
+                .MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
 
-        Log.d("gay","This is beginning bullshit 1")
 
 
         when(action) {
             null -> {
                 mp = MediaPlayer()
-                Log.d("gay","This is beginning bullshit 2")
 
                 mp!!.apply {
                     setAudioAttributes(
@@ -74,7 +82,43 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
         mp?.release()
     }
 
+    interface MusicManagerInterface{
+        fun pausePlaying():Int
+        fun startPlaying()
+        fun continuePlaying(length:Int)
+        fun stopPlaying()
 
+    }
+
+
+    companion object MusicManager : MusicManagerInterface {
+        var isPlaying:Boolean=false
+        var mp = MediaPlayer()
+        var len:Int? = null
+        override fun pausePlaying():Int {
+            mp.pause()
+            len = mp.currentPosition;
+            isPlaying = false
+            return len as Int
+        }
+
+        override fun startPlaying() {
+            mp.start()
+            isPlaying = true
+        }
+
+        override fun continuePlaying(len: Int) {
+            mp.seekTo(len);
+            mp.start();
+            isPlaying = true
+        }
+
+        override fun stopPlaying(){
+            mp.stop()
+            mp.release()
+            isPlaying = false
+        }
+    }
 }
 
 

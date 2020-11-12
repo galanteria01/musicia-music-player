@@ -155,7 +155,6 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                         putExtra("id",song.id!!)
                         putExtra("name",song.name)
                         putExtra("artist",song.artist)
-                        putExtra("uri",song.uri.toString())
                         putExtra("url",song.songURL)
                     }
                 myView.ivPlayButton.setOnClickListener {

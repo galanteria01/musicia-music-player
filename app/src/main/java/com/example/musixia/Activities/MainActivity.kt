@@ -54,9 +54,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, PlayMusic::class.java)
             startActivity(intent)
         }
-        playPauseBtn.setOnClickListener {
-            applicationContext.stopService(intent)
-        }
+
 
         //if(applicationContext.mp!!.isPlaying){
          //   playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24)
