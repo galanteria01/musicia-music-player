@@ -158,7 +158,7 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                     }
                 myView.buMusicPlay.setOnClickListener {
                     context!!.startService(intent)
-                    MusicService.startPlaying()
+
                 }
                 return myView
             }

@@ -2,10 +2,12 @@ package com.example.musixia.Services
 
 import android.app.Service
 import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Binder
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
@@ -13,7 +15,14 @@ import android.util.Log
 private const val ACTION_PLAY:String = "com.example.action.PLAY"
 
 class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnErrorListener {
-    private var mp:MediaPlayer?=null
+    interface MusicManagerInterface{
+        fun pausePlaying():Int
+        fun startPlaying()
+        fun continuePlaying(length: Int)
+        fun stopPlaying()
+
+    }
+    var mp:MediaPlayer?=null
     var name:String?=null
     var artist:String?=null
 
@@ -21,13 +30,22 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
     fun initMediaPlayer(){
         mp!!.setOnErrorListener(this)
     }
-
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
+    var binder: MyBinder = MyBinder()
+    var services: MusicService? = null
+    var context: Context? = null
+    override fun onBind(arg0: Intent?): IBinder? {
+        // TODO Auto-generated method stub
+        return binder
+    }
+    inner class MyBinder : Binder() {
+        fun getService(): MusicService = this@MusicService
     }
 
+
     override fun onPrepared(mp: MediaPlayer?) {
-        startPlaying()
+        Log.d("start", "onPrepared")
+
+        startPlaying(mp!!)
     }
     fun getSongName():String{
         return name!!
@@ -38,7 +56,7 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val action: String? = intent!!.action
-        Log.d("gay",action.toString())
+        Log.d("gay", action.toString())
 
         val data = intent.extras
         name = data!!.getString("name")
@@ -53,6 +71,7 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
         when(action) {
             null -> {
                 mp = MediaPlayer()
+                mp!!.reset()
 
                 mp!!.apply {
                     setAudioAttributes(
@@ -62,10 +81,12 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
                                     .build()
                     )
 
-                    setDataSource(applicationContext,uri)
+                    setDataSource(applicationContext, uri)
                     setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
                     setOnPreparedListener(this@MusicService)
                     prepareAsync()
+                    Log.d("start", "prepareAsync")
+
                 }
             }
         }
@@ -82,41 +103,35 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
         mp?.release()
     }
 
-    interface MusicManagerInterface{
-        fun pausePlaying():Int
-        fun startPlaying()
-        fun continuePlaying(length:Int)
-        fun stopPlaying()
-
-    }
 
 
-    companion object MusicManager : MusicManagerInterface {
+
+    companion object {
         var isPlaying:Boolean=false
-        var mp = MediaPlayer()
         var len:Int? = null
 
-        override fun pausePlaying():Int {
-            mp.pause()
-            len = mp.currentPosition;
+        fun pausePlaying(mp: MediaPlayer?):Int {
+            mp!!.pause()
+            len = mp!!.currentPosition;
             isPlaying = false
             return len as Int
         }
 
-        override fun startPlaying() {
-            mp.start()
+        fun startPlaying(mp: MediaPlayer?) {
+            Log.d("start", "startPlaying")
+            mp!!.start()
             isPlaying = true
         }
 
-        override fun continuePlaying(len: Int) {
-            mp.seekTo(len);
-            mp.start();
+        fun continuePlaying(len: Int, mp: MediaPlayer?) {
+            mp!!.seekTo(len);
+            mp!!.start();
             isPlaying = true
         }
 
-        override fun stopPlaying(){
-            mp.stop()
-            mp.release()
+        fun stopPlaying(mp: MediaPlayer?){
+            mp!!.stop()
+            mp!!.release()
             isPlaying = false
         }
     }
