@@ -157,8 +157,12 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                         putExtra("url",song.songURL)
                     }
                 myView.buMusicPlay.setOnClickListener {
-                    context!!.startService(intent)
-
+                    if(!MusicService.isPlaying){
+                        context!!.startService(intent)
+                    }else{
+                        context!!.stopService(intent)
+                        context!!.startService(intent)
+                    }
                 }
                 return myView
             }
