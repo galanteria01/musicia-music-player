@@ -20,9 +20,9 @@
             android:backgroundTint="#31485373"
             android:ems="10"
             android:gravity="center"
+            android:hint="Search for Music"
             android:inputType="textPersonName"
-            android:padding="10dp"
-            android:text="Search for Music" />
+            android:padding="10dp" />
 
         <ListView
             android:layout_width="match_parent"

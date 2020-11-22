@@ -23,16 +23,18 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
     var musicList = ArrayList<Music>()
     var mp:MediaPlayer?=null
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadMusic()
 
         mp = MediaPlayer()
-        loadMusic()
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
 
     }
@@ -106,7 +108,6 @@ class fMusicList : Fragment(R.layout.fragment_f_music_list) {
                 }
                 adapter = MyMusicAdapter(musicList)
                 lvMusic.adapter = adapter
-
             }
         }
 

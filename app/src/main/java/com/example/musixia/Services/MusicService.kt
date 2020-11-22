@@ -33,6 +33,8 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
     var binder: MyBinder = MyBinder()
     var services: MusicService? = null
     var context: Context? = null
+    var len:Int?=null
+
     override fun onBind(arg0: Intent?): IBinder? {
         // TODO Auto-generated method stub
         return binder
@@ -45,13 +47,25 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
     override fun onPrepared(mp: MediaPlayer?) {
         Log.d("start", "onPrepared")
 
-        startPlaying(mp!!)
+        playSong()
     }
     fun getSongName():String{
-        return name!!
+        return "Playboy"
     }
     fun getArtistName():String{
         return artist!!
+    }
+
+    fun playSong(){
+        mp!!.start()
+    }
+    fun pauseSong(){
+        len = mp!!.currentPosition
+        mp!!.pause()
+    }
+    fun continueSong(){
+        mp!!.seekTo(len!!)
+        mp!!.prepareAsync()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

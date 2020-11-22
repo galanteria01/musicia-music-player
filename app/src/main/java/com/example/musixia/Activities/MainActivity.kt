@@ -42,10 +42,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onServiceDisconnected(name: ComponentName) {}
                 }
-        if(MusicService.isPlaying){
             songName.text = services!!.getSongName()
             artistName.text = services!!.getArtistName()
-        }
+
 
 
         supportFragmentManager.beginTransaction().apply {
@@ -80,13 +79,12 @@ class MainActivity : AppCompatActivity() {
 
         playPauseBtn.setOnClickListener {
 
-            if(MusicService.isPlaying){
-                MusicService.pausePlaying(services!!.mp)
+            if(!services!!.isPlaying!!){
+                services!!.playSong()
                 playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24)
             }else{
-                //MusicService.continuePlaying(MusicService.len!!)
+                services!!.pauseSong()
                 playPauseBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
-
             }
         }
     }
