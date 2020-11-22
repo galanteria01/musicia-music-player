@@ -34,7 +34,7 @@ class MusicService: Service(),MediaPlayer.OnPreparedListener,MediaPlayer.OnError
     var services: MusicService? = null
     var context: Context? = null
     var len:Int?=null
-
+    var isPlaying:Int?=null
     override fun onBind(arg0: Intent?): IBinder? {
         // TODO Auto-generated method stub
         return binder
