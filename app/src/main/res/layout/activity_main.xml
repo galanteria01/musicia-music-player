@@ -1,100 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
-    android:orientation="vertical"
-    tools:context=".Activities.MainActivity">
+    android:paddingTop="?attr/actionBarSize">
 
-    <FrameLayout
-        android:id="@+id/flFragment"
-        android:layout_width="match_parent"
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="411dp"
+        android:layout_height="844dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:navGraph="@navigation/mobile_navigation" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" >
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" >
 
-    </FrameLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <LinearLayout
-        android:id="@+id/PlayMusicPath"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view">
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="64dp"
-            android:layout_height="56dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/songName"
-                android:layout_width="283dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:lines="1"
-                android:text="Starboy"
-                android:textColor="#009688"
+                android:id="@+id/tvSongName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sunflower"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/artistName"
+                android:id="@+id/tvArtistName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:lines="1"
-                android:text="Weekend"
-                android:textColor="#009688" />
+                android:text="Post Malone"
+                android:textSize="18sp" />
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/playPauseBtn"
+        <ImageView
+            android:id="@+id/imageView3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="#121212"
-            app:srcCompat="@drawable/ic_baseline_play_circle_filled_24" />
+            app:srcCompat="@android:drawable/ic_media_play" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/buHome"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="#121212"
-            app:srcCompat="@drawable/ic_baseline_home_24" />
-
-        <ImageButton
-            android:id="@+id/buSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="#121212"
-            app:srcCompat="@drawable/ic_baseline_search_24" />
-
-        <ImageButton
-            android:id="@+id/buFavourite"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="#121212"
-            app:srcCompat="@drawable/ic_baseline_playlist_play_24" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
