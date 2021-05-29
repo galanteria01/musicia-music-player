@@ -151,6 +151,7 @@ class MusicService:MediaBrowserServiceCompat() {
                             isPlayerInitialized = true
                         }
                     }else{
+                        mediaSession.sendSessionEvent(Constants.NETWORK_ERROR, null)
                         result.sendResult(null)
                     }
                 }
