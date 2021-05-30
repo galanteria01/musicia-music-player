@@ -1,9 +1,9 @@
 package com.plcoding.musicia.data.entity
 
 data class Song (
-    var songId: String = "",
+    var mediaId: String = "",
     val title: String= "",
-    val artist: String="",
+    val subtitle: String="",
     val songUrl: String="",
     val imageUrl: String=""
 

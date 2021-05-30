@@ -1,8 +1,9 @@
-package com.plcoding.musicia
+package com.plcoding.musicia.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.RequestManager
+import com.plcoding.musicia.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
