@@ -18,7 +18,7 @@ class FirebaseMusicSource @Inject constructor(
 
     var songs = emptyList<MediaMetadataCompat>()
 
-    suspend fun fetchMediaData() = withContext(Dispatchers.IO){
+    suspend fun fetchMediaData() = withContext(Dispatchers.Main){
         state = State.STATE_INITIALIZING
         val allSongs = musicdata.getSongs()
         songs = allSongs.map { song ->
